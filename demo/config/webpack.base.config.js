@@ -4,6 +4,7 @@
  **/
 const path = require('path')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const { VueLoaderPlugin } = require('vue-loader')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
@@ -11,7 +12,7 @@ module.exports = {
         main: '../demo/main.js'
     },
     output: {
-        path: path.resolve(__dirname, 'dist'),
+        path: path.resolve(__dirname, '../dist'),
         filename: '[name].js'
     },
     module: {
@@ -45,6 +46,8 @@ module.exports = {
     },
     plugins: [
         new CleanWebpackPlugin(),
+
+        new VueLoaderPlugin(),
 
         new HtmlWebpackPlugin({
             filename: 'index.html',
