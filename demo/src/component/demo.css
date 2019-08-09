@@ -9,4 +9,5 @@
 .demo p{
     display: flex;
     border: 1px solid red;
+    border-radius: 4px;
 }

@@ -41,7 +41,6 @@ module.exports = {
                     {
                         loader: 'postcss-loader',
                         options: {
-                            ident: 'postcss',
                             plugins: [
                                 require('postcss-import')(),
                                 require('autoprefixer')()
@@ -54,13 +53,19 @@ module.exports = {
                 test: /\.less$/,
                 use: [
                     'vue-style-loader',
-                    'css-loader',
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            importLoaders: 1
+                        }
+                    },
                     {
                         loader: 'postcss-loader',
                         options: {
                             sourceMap: true,
                             plugins: [
-                                require('autoprefixer')
+                                require('postcss-import')(),
+                                require('autoprefixer')()
                             ]
                         }
                     },
