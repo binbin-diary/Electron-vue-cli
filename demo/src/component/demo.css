@@ -1,0 +1,12 @@
+.demo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    background-color: #dddddd;
+}
+
+.demo p{
+    display: flex;
+    border: 1px solid red;
+}

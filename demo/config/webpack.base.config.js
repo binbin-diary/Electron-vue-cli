@@ -3,7 +3,6 @@
  *  webpack 基础配置
  **/
 const path = require('path')
-const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const { VueLoaderPlugin } = require('vue-loader')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
@@ -15,6 +14,14 @@ module.exports = {
         path: path.resolve(__dirname, '../dist'),
         filename: '[name].js'
     },
+    resolve: {
+        // 自动解析扩展名
+        extensions: ['.js', '.vue', '.json'],
+        // 别名
+        alias: {
+            '@src': path.resolve(__dirname,'../src')
+        }
+    },
     module: {
         rules: [
             {
@@ -23,7 +30,42 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                use: ['style-loader', 'css-loader']
+                use: [
+                    'style-loader',
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            importLoaders: 1
+                        }
+                    },
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            ident: 'postcss',
+                            plugins: [
+                                require('postcss-import')(),
+                                require('autoprefixer')()
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                test: /\.less$/,
+                use: [
+                    'vue-style-loader',
+                    'css-loader',
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            sourceMap: true,
+                            plugins: [
+                                require('autoprefixer')
+                            ]
+                        }
+                    },
+                    'less-loader'
+                ]
             },
             {
                 test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
@@ -45,8 +87,6 @@ module.exports = {
         ]
     },
     plugins: [
-        new CleanWebpackPlugin(),
-
         new VueLoaderPlugin(),
 
         new HtmlWebpackPlugin({
